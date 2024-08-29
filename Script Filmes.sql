@@ -325,3 +325,76 @@ REFERENCES [dbo].[Generos] ([Id])
 GO
 ALTER TABLE [dbo].[FilmesGenero] CHECK CONSTRAINT [FK__FilmesGen__IdGen__2E1BDC42]
 GO
+
+-- Validação 1
+SELECT Nome, Ano FROM Filmes
+
+-- Validação 2
+
+SELECT Nome, Ano FROM Filmes
+ORDER BY Ano ASC;
+
+-- Validação 3
+
+SELECT Nome, Ano, Duracao FROM Filmes
+WHERE Nome = 'De Volta para o futuro';
+
+-- Validação 4
+
+SELECT Nome, Ano, Duracao FROM Filmes
+WHERE Ano = 1997;
+
+-- Validação 5
+
+SELECT Nome, Ano, Duracao FROM Filmes
+WHERE Ano > 2000;
+
+-- Validação 6
+
+SELECT Nome, Ano, Duracao FROM Filmes
+WHERE Duracao > 100 AND Duracao < 150
+ORDER BY Duracao ASC;
+
+--Validação 7
+
+SELECT Ano, COUNT(*) AS Quantidade
+FROM Filmes
+GROUP BY Ano
+ORDER BY Quantidade DESC;
+
+-- Validação 8
+
+SELECT PrimeiroNome, UltimoNome, Genero FROM Atores
+WHERE Genero = 'M';
+
+--Validação 9
+
+SELECT PrimeiroNome, UltimoNome, Genero FROM Atores
+WHERE Genero = 'F'
+ORDER BY PrimeiroNome;
+
+
+-- Validação 10
+
+SELECT Filmes.Nome AS Nome,
+    Generos.Genero AS Genero
+FROM     Filmes
+JOIN     FilmesGenero ON Filmes.Id = FilmesGenero.IdFilme
+JOIN     Generos ON FilmesGenero.IdGenero = Generos.Id;
+
+-- Validação 11	
+
+SELECT Filmes.Nome AS Nome,
+    Generos.Genero AS Genero,
+	FilmesGenero.IdFilme AS ID
+FROM     Filmes
+JOIN     FilmesGenero ON Filmes.Id = FilmesGenero.IdFilme 
+JOIN     Generos ON FilmesGenero.IdGenero = Generos.Id
+WHERE Genero = 'Mistério';
+
+-- Validação 12
+
+SELECT Nome, a.PrimeiroNome, a.UltimoNome,e.Papel
+FROM Filmes f
+JOIN ElencoFilme e ON f.Id = e.IdFilme
+JOIN Atores a ON  a.Id = e.IdAtor
